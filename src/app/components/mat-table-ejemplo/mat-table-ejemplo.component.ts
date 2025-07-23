@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { ApiService } from '../../services/api.service';
 
 
 interface Usuario {
@@ -19,15 +20,30 @@ interface Usuario {
 
 
 export class MatTableEjemploComponent implements AfterViewInit{
-  displayedColumns:string[] =['id','nombre','correo'];
-  dataSource = new MatTableDataSource<Usuario>([
-    { id: 1, nombre: 'Ana', correo: 'ana@mail.com' },
-    { id: 2, nombre: 'Luis', correo: 'luis@mail.com' },
-    { id: 3, nombre: 'Sofía', correo: 'sofia@mail.com' },
-    { id: 4, nombre: 'Carlos', correo: 'carlos@mail.com' },
-    { id: 5, nombre: 'Lucía', correo: 'lucia@mail.com' }
-  ]);
+
+  datos:any[]=[];
+  
+displayedColumns: string[] = ['id', 'nombreCompleto', 'email', 'telefono', 'ciudad'];
+  dataSource = new MatTableDataSource<any>([]);
   @ViewChild(MatPaginator) paginator!:MatPaginator;
+
+
+  constructor(private api:ApiService){
+   this.api.getDummies().subscribe(res => {
+    this.datos = res.users.map((u: any) => ({
+      id: u.id,
+      nombreCompleto: `${u.firstName} ${u.lastName}`,
+      email: u.email,
+      telefono: u.phone,
+      ciudad: u.address?.city
+    }));
+
+
+    console.log(this.datos);
+    this.dataSource = new MatTableDataSource(this.datos);
+    this.dataSource.paginator = this.paginator;
+  });
+  }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;

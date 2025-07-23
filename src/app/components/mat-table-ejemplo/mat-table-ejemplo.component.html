@@ -1,28 +1,36 @@
 <div class="tabla-container p-4">
-  <table mat-table [dataSource]="dataSource" class="min-w-full border border-gray-300 shadow-md rounded-lg overflow-hidden">
+    <table mat-table [dataSource]="dataSource">
 
-    <!-- ID Column -->
     <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef class="bg-gray-200 text-left p-2 font-semibold border-b border-gray-300">ID</th>
-      <td mat-cell *matCellDef="let usuario" class="p-2 border-b border-gray-200">{{ usuario.id }}</td>
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
     </ng-container>
 
-    <!-- Nombre Column -->
-    <ng-container matColumnDef="nombre">
-      <th mat-header-cell *matHeaderCellDef class="bg-gray-200 text-left p-2 font-semibold border-b border-gray-300">Nombre</th>
-      <td mat-cell *matCellDef="let usuario" class="p-2 border-b border-gray-200">{{ usuario.nombre }}</td>
+    <ng-container matColumnDef="nombreCompleto">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let element"> {{element.nombreCompleto}} </td>
     </ng-container>
 
-    <!-- Correo Column -->
-    <ng-container matColumnDef="correo">
-      <th mat-header-cell *matHeaderCellDef class="bg-gray-200 text-left p-2 font-semibold border-b border-gray-300">Correo</th>
-      <td mat-cell *matCellDef="let usuario" class="p-2 border-b border-gray-200">{{ usuario.correo }}</td>
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef> Correo </th>
+      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="telefono">
+      <th mat-header-cell *matHeaderCellDef> Teléfono </th>
+      <td mat-cell *matCellDef="let element"> {{element.telefono}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ciudad">
+      <th mat-header-cell *matHeaderCellDef> Ciudad </th>
+      <td mat-cell *matCellDef="let element"> {{element.ciudad}} </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="hover:bg-gray-100"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
+  
   <mat-paginator
     [pageSize]="3"
     [pageSizeOptions]="[3, 5, 10]"
